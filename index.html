@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChiliDoctor AI - Expert System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <span class="material-icons" style="color: white; font-size: 32px;">local_florist</span>
+                </div>
+                <div class="logo-text">
+                    <h1 class="md-headline-5">SIPEDACI</h1>
+                    <p class="md-body-2">Sistem Pakar Deteksi Penyakit Daun Cabai</p>
+                </div>
+            </div>
+            
+            <!-- Tambahkan bagian ini untuk toggle dark mode -->
+            <div class="header-actions">
+                <button id="dark-mode-toggle" class="md-button md-button-text dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                    <span class="material-icons" id="dark-mode-icon">dark_mode</span>
+                </button>
+                <div class="status-chip">
+                    <span class="material-icons" style="font-size: 16px;">check_circle</span>
+                    <span>Rule-Based AI</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Consultation Panel -->
+        <div class="consultation-panel">
+            <!-- Main Consultation Card -->
+            <div class="md-card md-card-elevated consultation-card">
+                <div class="consultation-header">
+                    <div class="consultation-icon">
+                        <span class="material-icons">psychology</span>
+                    </div>
+                    <div>
+                        <h2 class="md-headline-6">Smart Diagnosis</h2>
+                        <p class="md-body-2" style="color: #757575;">AI-powered plant health consultation</p>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="md-body-2" style="font-weight: 500;">Consultation Progress</span>
+                        <span id="progress-text" class="md-body-2" style="color: var(--md-primary); font-weight: 500;">0/15 Gejala</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                </div>
+
+                <!-- Question Section -->
+                <div id="question-section">
+                    <div class="question-card">
+                        <h3 class="md-headline-6" id="current-question" style="margin-bottom: 8px;">
+                            Selamat datang! Silakan mulai konsultasi dengan menjawab pertanyaan berikut.
+                        </h3>
+                        <p class="md-body-2" id="question-help" style="color: #757575;">
+                            Jawab dengan jujur berdasarkan kondisi tanaman cabai Anda saat ini.
+                        </p>
+                    </div>
+
+                    <div class="answer-options" id="answer-options">
+                        <button onclick="startConsultation()" class="md-button md-button-primary" style="padding: 16px 32px; width: 100%;">
+                            <span class="material-icons" style="margin-right: 8px;">rocket_launch</span>
+                            <div style="text-align: left;">
+                                <div style="font-size: 16px; font-weight: 500;">Mulai Diagnosis</div>
+                                <div style="font-size: 12px; opacity: 0.8; text-transform: none; letter-spacing: normal;">Klik untuk memulai proses konsultasi</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reset Button -->
+                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--md-outline);">
+                    <button onclick="resetConsultation()" class="md-button md-button-text">
+                        <span class="material-icons" style="margin-right: 8px; font-size: 18px;">refresh</span>
+                        Reset konsultasi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Diagnosis Result -->
+            <div id="diagnosis-result" class="md-card hidden">
+                <div class="result-card">
+                    <div id="diagnosis-content"></div>
+                </div>
+            </div>
+
+            <!-- Inference Trace -->
+<div id="inference-trace" class="md-card hidden">
+    <div class="inference-header" onclick="toggleInferenceTrace()">
+        <div class="consultation-header">
+            <div class="consultation-icon" style="background: #9C27B0;">
+                <span class="material-icons">memory</span>
+            </div>
+            <div style="flex: 1;">
+                <h3 class="md-headline-6">AI Inference Trace</h3>
+                <p class="md-body-2" style="color: #757575;">Forward chaining reasoning process</p>
+            </div>
+            <button class="collapse-toggle" id="inference-toggle" title="Toggle Inference Trace">
+                <span class="material-icons">expand_more</span>
+            </button>
+        </div>
+    </div>
+    <div id="inference-content" class="inference-content collapsed">
+        <div id="trace-content"></div>
+    </div>
+</div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Selected Symptoms -->
+            <div class="md-card sidebar-card">
+                <div class="sidebar-header">
+                    <div class="sidebar-icon">
+                        <span class="material-icons" style="font-size: 16px;">checklist</span>
+                    </div>
+                    <h3 class="md-headline-6">Gejala Dipilih</h3>
+                </div>
+                <div id="selected-symptoms">
+                    <p class="md-body-2" style="color: #757575; font-style: italic;">Belum ada gejala yang dipilih</p>
+                </div>
+            </div>
+
+            <!-- Knowledge Base Info -->
+            <div class="md-card sidebar-card">
+                <div class="sidebar-header">
+                    <div class="sidebar-icon" style="background: #3F51B5;">
+                        <span class="material-icons" style="font-size: 16px;">school</span>
+                    </div>
+                    <h3 class="md-headline-6">Knowledge Base</h3>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number" id="total-rules">0</span>
+                        <div class="stat-label">Rules</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" style="color: #9C27B0;">4</span>
+                        <div class="stat-label">Diseases</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" style="color: #F44336;">15</span>
+                        <div class="stat-label">Symptoms</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" style="color: #FF9800;">FC</span>
+                        <div class="stat-label">Method</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disease Database -->
+            <div class="md-card sidebar-card">
+                <div class="sidebar-header">
+                    <div class="sidebar-icon" style="background: var(--md-secondary);">
+                        <span class="material-icons" style="font-size: 16px;">bug_report</span>
+                    </div>
+                    <h3 class="md-headline-6">Disease Database</h3>
+                </div>
+                <div>
+                    <div class="disease-item">
+                        <div class="disease-icon">🔴</div>
+                        <div class="disease-info">
+                            <h4>Leaf Spot</h4>
+                            <p>Fungal leaf disease</p>
+                        </div>
+                    </div>
+                    <div class="disease-item">
+                        <div class="disease-icon">🌀</div>
+                        <div class="disease-info">
+                            <h4>Leaf Curl</h4>
+                            <p>Viral leaf curl</p>
+                        </div>
+                    </div>
+                    <div class="disease-item">
+                        <div class="disease-icon">🪰</div>
+                        <div class="disease-info">
+                            <h4>Whitefly</h4>
+                            <p>Pest infestation</p>
+                        </div>
+                    </div>
+                    <div class="disease-item">
+                        <div class="disease-icon">💚</div>
+                        <div class="disease-info">
+                            <h4>Healthy</h4>
+                            <p>Plant is healthy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="md-headline-6">About System</h4>
+                <p class="md-body-2">
+                    Modern expert system using Forward Chaining inference for chili plant disease diagnosis with 15 symptoms and 13 intelligent rules.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4 class="md-headline-6">Technology Stack</h4>
+                <ul class="tech-list">
+                    <li>
+                        <div class="tech-dot" style="background: #2196F3;"></div>
+                        <span>Rule-Based Expert System</span>
+                    </li>
+                    <li>
+                        <div class="tech-dot" style="background: #9C27B0;"></div>
+                        <span>Forward Chaining AI</span>
+                    </li>
+                    <li>
+                        <div class="tech-dot" style="background: var(--md-primary);"></div>
+                        <span>Confidence-based Diagnosis</span>
+                    </li>
+                    <li>
+                        <div class="tech-dot" style="background: #FF9800;"></div>
+                        <span>Material Design UI</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4 class="md-headline-6">Quick Actions</h4>
+                <button onclick="runDemo()" class="md-button md-button-primary" style="width: 100%; margin-bottom: 16px;">
+                    <span class="material-icons" style="margin-right: 8px;">science</span>
+                    Run Demo
+                </button>
+                <p class="md-caption">
+                    Diagnostic results are for reference only. Consult agricultural experts for serious issues.
+                </p>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025 ChiliDoctor AI Expert System • Built with Material Design</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

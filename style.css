@@ -1,0 +1,1081 @@
+
+:root {
+    --md-primary: #4CAF50;
+    --md-primary-dark: #388E3C;
+    --md-primary-light: #81C784;
+    --md-secondary: #F44336;
+    --md-secondary-dark: #D32F2F;
+    --md-secondary-light: #EF5350;
+    --md-accent: #FF5722;
+    --md-surface: #FFFFFF;
+    --md-background: #FAFAFA;
+    --md-on-surface: #212121;
+    --md-on-primary: #FFFFFF;
+    --md-on-secondary: #FFFFFF;
+    --md-outline: #E0E0E0;
+    --md-shadow: rgba(0, 0, 0, 0.12);
+    --md-shadow-elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --md-shadow-elevation-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    --md-shadow-elevation-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    --md-shadow-elevation-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--md-background);
+    color: var(--md-on-surface);
+    line-height: 1.6;
+}
+
+/* Material Design Cards */
+.md-card {
+    background: var(--md-surface);
+    border-radius: 8px;
+    box-shadow: var(--md-shadow-elevation-1);
+    transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.md-card:hover {
+    box-shadow: var(--md-shadow-elevation-2);
+}
+
+.md-card-elevated {
+    box-shadow: var(--md-shadow-elevation-2);
+}
+
+.md-card-elevated:hover {
+    box-shadow: var(--md-shadow-elevation-3);
+}
+
+/* Material Design Buttons */
+.md-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.75px;
+    cursor: pointer;
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.md-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.md-button:hover::before {
+    opacity: 0.12;
+}
+
+.md-button:active::before {
+    opacity: 0.24;
+}
+
+.md-button-primary {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    box-shadow: var(--md-shadow-elevation-1);
+}
+
+.md-button-primary:hover {
+    box-shadow: var(--md-shadow-elevation-2);
+}
+
+.md-button-text {
+    background-color: transparent;
+    color: var(--md-primary);
+    box-shadow: none;
+}
+
+/* Material Design Typography */
+
+.md-headline-5 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: 0em;
+}
+
+.md-headline-6 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.0125em;
+}
+
+.md-body-1 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00937em;
+}
+
+.md-body-2 {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+}
+
+.md-caption {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.66;
+    letter-spacing: 0.03333em;
+}
+
+/* Header */
+.header {
+    background: var(--md-surface);
+    box-shadow: var(--md-shadow-elevation-1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--md-primary), var(--md-primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--md-shadow-elevation-2);
+}
+
+.logo-text h1 {
+    color: var(--md-on-surface);
+    margin: 0;
+}
+
+.logo-text p {
+    color: #757575;
+    margin: 0;
+}
+
+.status-chip {
+    background: #E8F5E8;
+    color: var(--md-primary-dark);
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Main Layout */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+}
+
+/* Consultation Panel */
+.consultation-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.consultation-card {
+    padding: 24px;
+}
+
+.consultation-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.consultation-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--md-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--md-on-primary);
+}
+
+/* Progress Bar */
+.progress-section {
+    margin-bottom: 24px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.progress-bar-container {
+    background: #E0E0E0;
+    height: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--md-primary), var(--md-accent));
+    height: 100%;
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Question Section */
+.question-card {
+    background: #F3E5F5;
+    border-left: 4px solid var(--md-primary);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+.answer-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.answer-button {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border: 2px solid var(--md-outline);
+    border-radius: 8px;
+    background: var(--md-surface);
+    cursor: pointer;
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left;
+}
+
+.answer-button:hover {
+    border-color: var(--md-primary);
+    box-shadow: var(--md-shadow-elevation-1);
+}
+
+.answer-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.yes-answer .answer-icon {
+    background: #E8F5E8;
+    color: var(--md-primary-dark);
+}
+
+.no-answer .answer-icon {
+    background: #FFEBEE;
+    color: var(--md-secondary-dark);
+}
+
+.maybe-answer .answer-icon {
+    background: #FFF3E0;
+    color: #F57C00;
+}
+
+.yes-answer:hover {
+    border-color: var(--md-primary);
+    background: #F1F8E9;
+}
+
+.no-answer:hover {
+    border-color: var(--md-secondary);
+    background: #FFEBEE;
+}
+
+.maybe-answer:hover {
+    border-color: #FF9800;
+    background: #FFF8E1;
+}
+
+/* Sidebar */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sidebar-card {
+    padding: 20px;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.sidebar-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--md-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--md-on-primary);
+    font-size: 16px;
+}
+
+/* Selected Symptoms */
+.symptom-item {
+    background: #E8F5E8;
+    border: 1px solid var(--md-primary-light);
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.symptom-code {
+    font-weight: 500;
+    color: var(--md-primary-dark);
+}
+
+/* Knowledge Base Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.stat-card {
+    background: var(--md-surface);
+    border: 1px solid var(--md-outline);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--md-primary);
+    display: block;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #757575;
+    margin-top: 4px;
+}
+
+/* Disease Database */
+.disease-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.disease-item:hover {
+    background: #F5F5F5;
+}
+
+.disease-icon {
+    font-size: 24px;
+}
+
+.disease-info h4 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.disease-info p {
+    font-size: 12px;
+    color: #757575;
+    margin: 0;
+}
+
+/* Diagnosis Result */
+.result-card {
+    background: linear-gradient(135deg, var(--md-primary), var(--md-primary-dark));
+    color: var(--md-on-primary);
+    padding: 32px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.result-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.confidence-section {
+    margin: 24px 0;
+}
+
+.confidence-bar {
+    background: rgba(255, 255, 255, 0.3);
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.confidence-fill {
+    background: var(--md-on-primary);
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.treatment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+    .treatment-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.treatment-section {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: left;
+}
+
+.treatment-section h5 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.treatment-list {
+    list-style: none;
+}
+
+.treatment-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Inference Trace */
+.trace-item {
+    background: var(--md-surface);
+    border-left: 4px solid var(--md-primary);
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 0 4px 4px 0;
+}
+
+.trace-step {
+    font-weight: 500;
+    color: var(--md-primary);
+    font-size: 12px;
+}
+
+.trace-message {
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.trace-time {
+    font-size: 11px;
+    color: #757575;
+    margin-top: 4px;
+}
+
+/* Footer */
+.footer {
+    background: var(--md-surface);
+    border-top: 1px solid var(--md-outline);
+    margin-top: 48px;
+    padding: 32px 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 32px;
+}
+
+.footer-section h4 {
+    color: var(--md-on-surface);
+    margin-bottom: 16px;
+}
+
+.footer-section p {
+    color: #757575;
+    line-height: 1.6;
+}
+
+.tech-list {
+    list-style: none;
+}
+
+.tech-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #757575;
+}
+
+.tech-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.footer-copyright {
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--md-outline);
+    color: #757575;
+    font-size: 14px;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+        pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    /* Tambahkan ke style.css */
+
+/* Header Actions untuk dark mode toggle */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+    border-radius: 50% !important;
+    width: 48px;
+    height: 48px;
+    padding: 0 !important;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-mode-toggle:hover {
+    background: rgba(0, 0, 0, 0.08);
+    transform: scale(1.05);
+}
+
+.dark-mode-toggle .material-icons {
+    font-size: 20px;
+    color: var(--md-on-surface);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-mode-toggle:hover .material-icons {
+    transform: rotate(180deg);
+}
+
+/* Dark theme adjustments untuk toggle */
+.dark-theme .dark-mode-toggle {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .dark-mode-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.dark-theme .dark-mode-toggle .material-icons {
+    color: #E0E0E0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-actions {
+        gap: 8px;
+    }
+    
+    .dark-mode-toggle {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+    
+    .dark-mode-toggle .material-icons {
+        font-size: 18px;
+    }
+    
+    .status-chip {
+        font-size: 10px;
+        padding: 2px 8px;
+    }
+}
+
+/* Enhanced dark theme variables */
+.dark-theme {
+    --md-background: #121212;
+    --md-surface: #1E1E1E;
+    --md-on-surface: #E0E0E0;
+    --md-outline: #333333;
+    --md-primary: #81C784; /* Slightly lighter green for better contrast */
+    --md-primary-dark: #4CAF50;
+}
+
+/* Dark theme enhancements */
+.dark-theme .header {
+    background: var(--md-surface);
+    border-bottom: 1px solid var(--md-outline);
+}
+
+.dark-theme .footer {
+    background: var(--md-surface);
+    border-top: 1px solid var(--md-outline);
+}
+
+.dark-theme .footer-copyright {
+    border-top: 1px solid var(--md-outline);
+}
+
+.dark-theme .symptom-item {
+    background: rgba(129, 199, 132, 0.15);
+    border-color: rgba(129, 199, 132, 0.3);
+    color: var(--md-on-surface);
+}
+
+.dark-theme .disease-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .trace-item {
+    background: var(--md-surface);
+    border-left-color: var(--md-primary);
+}
+
+/* Smooth transition for theme changes */
+body, .md-card, .header, .footer, .answer-button, .symptom-item, .stat-card, .disease-item, .trace-item {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+
+    .dark-theme .md-card {
+        background: var(--md-surface);
+        color: var(--md-on-surface);
+    }
+
+    .dark-theme .question-card {
+        background: #2D2D2D;
+        color: var(--md-on-surface);
+    }
+
+    .dark-theme .answer-button {
+        background: var(--md-surface);
+        color: var(--md-on-surface);
+        border-color: var(--md-outline);
+    }
+
+    .dark-theme .stat-card {
+        background: var(--md-surface);
+        border-color: var(--md-outline);
+    }
+
+    /* Keyboard navigation styles */
+    .keyboard-navigation *:focus {
+        outline: 2px solid var(--md-primary) !important;
+        outline-offset: 2px !important;
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        :root {
+            --md-outline: #000000;
+            --md-shadow: rgba(0, 0, 0, 0.5);
+        }
+        
+        .md-card {
+            border: 2px solid var(--md-outline);
+        }
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+        
+        .ripple {
+            display: none;
+        }
+    }
+
+    /* Print optimizations */
+    @media print {
+        .header, .footer, .sidebar {
+            display: none;
+        }
+        
+        .main-container {
+            grid-template-columns: 1fr;
+            max-width: 100%;
+        }
+        
+        .md-card {
+            box-shadow: none;
+            border: 1px solid #ccc;
+            break-inside: avoid;
+            margin-bottom: 1rem;
+        }
+        
+        .result-card {
+            background: #f5f5f5 !important;
+            color: #333 !important;
+        }
+    }
+
+    /* Loading states */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Enhanced focus indicators */
+    .answer-button:focus {
+        outline: 3px solid var(--md-primary);
+        outline-offset: 2px;
+    }
+
+    /* Improved touch targets for mobile */
+    @media (max-width: 768px) {
+        .md-button {
+            min-height: 48px;
+            padding: 12px 24px;
+        }
+        
+        .answer-button {
+            min-height: 64px;
+            padding: 16px;
+        }
+        
+        .sidebar-icon, .consultation-icon {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    /* Smooth transitions */
+    * {
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* Tambahkan CSS ini ke style.css */
+
+/* Inference Trace Collapsible */
+.inference-header {
+    padding: 24px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+    border-radius: 8px 8px 0 0;
+}
+
+.inference-header:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.dark-theme .inference-header:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.consultation-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0; /* Reset margin untuk header di dalam collapsible */
+}
+
+.collapse-toggle {
+    background: none;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--md-on-surface);
+    min-width: 40px;
+    height: 40px;
+}
+
+.collapse-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.dark-theme .collapse-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.collapse-toggle .material-icons {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 24px;
+}
+
+.collapse-toggle.expanded .material-icons {
+    transform: rotate(180deg);
+}
+
+/* Inference Content */
+.inference-content {
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    border-top: 1px solid var(--md-outline);
+    overflow: hidden;
+}
+
+.inference-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    border-top: none;
+    overflow: hidden;
+}
+
+.inference-content.expanded {
+    max-height: none; /* Remove height restriction */
+    opacity: 1;
+    overflow: visible; /* Allow scrolling */
+    max-height: 80vh; /* Set reasonable max height for large content */
+}
+
+.inference-content #trace-content {
+    padding: 0 24px 24px 24px;
+    max-height: 60vh; /* Limit height for scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scroll */
+}
+
+/* Custom scrollbar styling */
+.inference-content #trace-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.inference-content #trace-content::-webkit-scrollbar-track {
+    background: var(--md-outline);
+    border-radius: 3px;
+}
+
+.inference-content #trace-content::-webkit-scrollbar-thumb {
+    background: var(--md-primary);
+    border-radius: 3px;
+}
+
+.inference-content #trace-content::-webkit-scrollbar-thumb:hover {
+    background: var(--md-primary-dark);
+}
+
+/* Dark theme scrollbar */
+.dark-theme .inference-content #trace-content::-webkit-scrollbar-track {
+    background: #333333;
+}
+
+.dark-theme .inference-content #trace-content::-webkit-scrollbar-thumb {
+    background: var(--md-primary);
+}
+
+/* Enhanced trace items untuk collapsed state */
+.trace-item {
+    background: var(--md-surface);
+    border-left: 4px solid var(--md-primary);
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 0 4px 4px 0;
+    transition: all 0.2s ease;
+}
+
+.trace-item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    transform: translateX(2px);
+}
+
+.dark-theme .trace-item {
+    background: #2A2A2A;
+}
+
+.dark-theme .trace-item:hover {
+    background-color: #333333;
+}
+
+/* Indicator untuk collapsed state */
+.inference-trace-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: rgba(156, 39, 176, 0.1);
+    border-top: 1px solid rgba(156, 39, 176, 0.2);
+    font-size: 14px;
+    color: #9C27B0;
+    border-radius: 0 0 8px 8px;
+}
+
+.inference-trace-indicator .material-icons {
+    font-size: 16px;
+}
+
+/* Animation untuk smooth expand/collapse */
+@keyframes expandContent {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.inference-content.expanded #trace-content {
+    animation: expandContent 0.3s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .inference-header {
+        padding: 16px;
+    }
+    
+    .inference-content #trace-content {
+        padding: 0 16px 16px 16px;
+        max-height: 50vh; /* Smaller height on mobile */
+    }
+    
+    .collapse-toggle {
+        min-width: 36px;
+        height: 36px;
+    }
+    
+    .collapse-toggle .material-icons {
+        font-size: 20px;
+    }
+}
+
+/* Focus states untuk accessibility */
+.collapse-toggle:focus {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 2px;
+}
+
+/* Improved keyboard navigation */
+.inference-header:focus-within {
+    background-color: rgba(76, 175, 80, 0.08);
+}
+
+.dark-theme .inference-header:focus-within {
+    background-color: rgba(129, 199, 132, 0.08);
+}
