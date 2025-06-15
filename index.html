@@ -3,258 +3,605 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChiliDoctor AI - Expert System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>SIPEDACI - Sistem Pakar Deteksi Penyakit Daun Cabai</title>
+    <meta name="description" content="SIPEDACI adalah sistem pakar yang membantu petani dalam mendeteksi penyakit pada daun cabai menggunakan kecerdasan buatan secara cepat dan akurat." />
+    <meta name="author" content="Anjas Rani" />
+    <link rel="icon" href="/sipedaci.png" type="image/x-icon" />
+    <link rel="canonical" href="https://www.sipedaci.my.id/" />
+
+    <meta property="og:title" content="Deteksi Penyakit Tanaman Cabai | SIPEDACI" />
+  <meta property="og:description" content="Gunakan SIPEDACI untuk mendeteksi penyakit pada daun cabai secara otomatis dengan AI." />
+  <meta property="og:image" content="https://www.sipedaci.my.id/sipedaci.png" />
+  <meta property="og:url" content="https://www.sipedaci.my.id/" />
+  <meta property="og:type" content="website" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #16a34a, #22c55e, #4ade80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .leaf-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.05'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-section">
-                <div class="logo-icon">
-                    <span class="material-icons" style="color: white; font-size: 32px;">local_florist</span>
+<body class="bg-gradient-to-br from-primary-50 via-white to-primary-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                   <img src="/sipedaci.png" alt="logo sipedaci" class="w-10 h-10">
+                    <span class="text-xl font-bold gradient-text">SIPEDACI</span>
                 </div>
-                <div class="logo-text">
-                    <h1 class="md-headline-5">SIPEDACI</h1>
-                    <p class="md-body-2">Sistem Pakar Deteksi Penyakit Daun Cabai</p>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-primary-700 hover:text-primary-500 transition-colors duration-300">Beranda</a>
+                    <a href="#features" class="text-primary-700 hover:text-primary-500 transition-colors duration-300">Fitur</a>
+                    <a href="#how-it-works" class="text-primary-700 hover:text-primary-500 transition-colors duration-300">Cara Kerja</a>
+                    <a href="#about" class="text-primary-700 hover:text-primary-500 transition-colors duration-300">Tentang</a>
                 </div>
-            </div>
-            
-            <!-- Tambahkan bagian ini untuk toggle dark mode -->
-            <div class="header-actions">
-                <button id="dark-mode-toggle" class="md-button md-button-text dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
-                    <span class="material-icons" id="dark-mode-icon">dark_mode</span>
-                </button>
-                <div class="status-chip">
-                    <span class="material-icons" style="font-size: 16px;">check_circle</span>
-                    <span>Rule-Based AI</span>
-                </div>
+                <a href="deteksi.html" class="inline-block bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105">
+                    Mulai Konsultasi
+                  </a>
+                  
             </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- Main Content -->
-    <div class="main-container">
-        <!-- Consultation Panel -->
-        <div class="consultation-panel">
-            <!-- Main Consultation Card -->
-            <div class="md-card md-card-elevated consultation-card">
-                <div class="consultation-header">
-                    <div class="consultation-icon">
-                        <span class="material-icons">psychology</span>
-                    </div>
-                    <div>
-                        <h2 class="md-headline-6">Smart Diagnosis</h2>
-                        <p class="md-body-2" style="color: #757575;">AI-powered plant health consultation</p>
-                    </div>
-                </div>
-
-                <!-- Progress Bar -->
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <span class="md-body-2" style="font-weight: 500;">Consultation Progress</span>
-                        <span id="progress-text" class="md-body-2" style="color: var(--md-primary); font-weight: 500;">0/15 Gejala</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div id="progress-bar" class="progress-bar"></div>
-                    </div>
-                </div>
-
-                <!-- Question Section -->
-                <div id="question-section">
-                    <div class="question-card">
-                        <h3 class="md-headline-6" id="current-question" style="margin-bottom: 8px;">
-                            Selamat datang! Silakan mulai konsultasi dengan menjawab pertanyaan berikut.
-                        </h3>
-                        <p class="md-body-2" id="question-help" style="color: #757575;">
-                            Jawab dengan jujur berdasarkan kondisi tanaman cabai Anda saat ini.
+    <!-- Hero Section -->
+    <section id="home" class="pt-24 pb-12 px-4 sm:px-6 lg:px-8 leaf-pattern relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <h1 class="text-5xl lg:text-6xl font-bold leading-tight">
+                            <span class="gradient-text">Sistem Pakar</span><br>
+                            <span class="text-gray-800">Deteksi Penyakit</span><br>
+                            <span class="text-primary-600">Daun Cabai</span>
+                        </h1>
+                        <p class="text-xl text-gray-600 leading-relaxed">
+                            SIPEDACI menggunakan rule-based expert system dengan forward chaining untuk memberikan diagnosis akurat berdasarkan gejala yang Anda amati pada tanaman cabai.
                         </p>
                     </div>
-
-                    <div class="answer-options" id="answer-options">
-                        <button onclick="startConsultation()" class="md-button md-button-primary" style="padding: 16px 32px; width: 100%;">
-                            <span class="material-icons" style="margin-right: 8px;">rocket_launch</span>
-                            <div style="text-align: left;">
-                                <div style="font-size: 16px; font-weight: 500;">Mulai Diagnosis</div>
-                                <div style="font-size: 12px; opacity: 0.8; text-transform: none; letter-spacing: normal;">Klik untuk memulai proses konsultasi</div>
-                            </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="deteksi.html" class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                            🔍 Mulai Konsultasi Sekarang
+                        </a>
+                        <button class="border-2 border-primary-600 text-primary-600 hover:bg-primary-50 px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:scale-105">
+                            📖 Pelajari Lebih Lanjut
                         </button>
                     </div>
+                    <div class="flex items-center space-x-8 pt-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-primary-600">95%</div>
+                            <div class="text-sm text-gray-600">Akurasi</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-primary-600">1000+</div>
+                            <div class="text-sm text-gray-600">Petani Terbantu</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-primary-600">24/7</div>
+                            <div class="text-sm text-gray-600">Tersedia</div>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Reset Button -->
-                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--md-outline);">
-                    <button onclick="resetConsultation()" class="md-button md-button-text">
-                        <span class="material-icons" style="margin-right: 8px; font-size: 18px;">refresh</span>
-                        Reset konsultasi
-                    </button>
+                <div class="relative">
+                    <div class="animate-float">
+                        <div class="relative bg-white rounded-3xl shadow-2xl overflow-hidden hover-scale">
+                            <div class="bg-gradient-to-br from-primary-500 to-primary-700 p-6">
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                                </div>
+                                <h3 class="text-white text-xl font-semibold">SIPEDACI Expert System</h3>
+                            </div>
+                            <div class="p-8">
+                                <div class="bg-primary-50 rounded-2xl p-6 mb-6">
+                                    <div class="text-6xl text-center mb-4">🤔</div>
+                                    <div class="text-center">
+                                        <div class="text-lg font-semibold text-gray-800">Konsultasi Gejala</div>
+                                        <div class="text-sm text-gray-600 mt-1">Jawab pertanyaan seputar gejala</div>
+                                    </div>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="p-3 bg-blue-50 rounded-lg">
+                                        <div class="text-sm font-medium text-blue-700">❓ Apakah daun menunjukkan bercak cokelat?</div>
+                                        <div class="flex gap-2 mt-2">
+                                            <button class="px-3 py-1 bg-green-100 text-green-700 rounded text-xs">Ya</button>
+                                            <button class="px-3 py-1 bg-red-100 text-red-700 rounded text-xs">Tidak</button>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                                        <span class="text-sm font-medium">Forward Chaining...</span>
+                                        <div class="w-16 bg-yellow-200 rounded-full h-2">
+                                            <div class="bg-yellow-500 h-2 rounded-full w-12 animate-pulse"></div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 bg-primary-50 rounded-lg">
+                                        <div class="text-sm font-medium text-primary-700">✓ Diagnosis: Leaf Spot Disease</div>
+                                        <div class="text-xs text-gray-600 mt-1">Confidence: 89.5%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-primary-200 rounded-full animate-pulse-slow opacity-60"></div>
+                    <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-primary-100 rounded-full animate-bounce-slow opacity-40"></div>
                 </div>
             </div>
-
-            <!-- Diagnosis Result -->
-            <div id="diagnosis-result" class="md-card hidden">
-                <div class="result-card">
-                    <div id="diagnosis-content"></div>
-                </div>
-            </div>
-
-            <!-- Inference Trace -->
-<div id="inference-trace" class="md-card hidden">
-    <div class="inference-header" onclick="toggleInferenceTrace()">
-        <div class="consultation-header">
-            <div class="consultation-icon" style="background: #9C27B0;">
-                <span class="material-icons">memory</span>
-            </div>
-            <div style="flex: 1;">
-                <h3 class="md-headline-6">AI Inference Trace</h3>
-                <p class="md-body-2" style="color: #757575;">Forward chaining reasoning process</p>
-            </div>
-            <button class="collapse-toggle" id="inference-toggle" title="Toggle Inference Trace">
-                <span class="material-icons">expand_more</span>
-            </button>
         </div>
-    </div>
-    <div id="inference-content" class="inference-content collapsed">
-        <div id="trace-content"></div>
-    </div>
-</div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Fitur Unggulan</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Teknologi terdepan untuk memberikan diagnosis yang akurat dan solusi yang tepat
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group hover-scale bg-gradient-to-br from-primary-50 to-white p-8 rounded-2xl border border-primary-100">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary-200 transition-colors">
+                        <span class="text-3xl">🧠</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Rule-Based System</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Menggunakan sistem berbasis aturan (rule-based) yang telah dikuratisi oleh para ahli pertanian untuk memberikan diagnosis yang akurat dan terpercaya.
+                    </p>
+                </div>
+                <div class="group hover-scale bg-gradient-to-br from-primary-50 to-white p-8 rounded-2xl border border-primary-100">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary-200 transition-colors">
+                        <span class="text-3xl">🔗</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Forward Chaining</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Menggunakan metode forward chaining untuk memproses gejala-gejala yang diamati dan menghasilkan kesimpulan diagnosis secara logis dan sistematis.
+                    </p>
+                </div>
+                <div class="group hover-scale bg-gradient-to-br from-primary-50 to-white p-8 rounded-2xl border border-primary-100">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary-200 transition-colors">
+                        <span class="text-3xl">📊</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Confidence-Based</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Setiap diagnosis dilengkapi dengan tingkat kepercayaan (confidence level) untuk membantu Anda memahami seberapa yakin sistem terhadap hasil diagnosis.
+                    </p>
+                </div>
+                <div class="group hover-scale bg-gradient-to-br from-primary-50 to-white p-8 rounded-2xl border border-primary-100">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary-200 transition-colors">
+                        <span class="text-3xl">❓</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Konsultasi Interaktif</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Sistem akan mengajukan serangkaian pertanyaan tentang gejala yang diamati untuk mendapatkan informasi yang akurat dan lengkap.
+                    </p>
+                </div>
+                <div class="group hover-scale bg-gradient-to-br from-primary-50 to-white p-8 rounded-2xl border border-primary-100">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary-200 transition-colors">
+                        <span class="text-3xl">📱</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Multi Platform</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Akses dari mana saja menggunakan smartphone, tablet, atau komputer. Interface responsif dan user-friendly untuk semua perangkat.
+                    </p>
+                </div>
+                <div class="group hover-scale bg-gradient-to-br from-primary-50 to-white p-8 rounded-2xl border border-primary-100">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary-200 transition-colors">
+                        <span class="text-3xl">🔒</span>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Basis Pengetahuan</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Dilengkapi dengan basis pengetahuan komprehensif yang dikembangkan bersama para ahli pertanian dan penyakit tanaman.
+                    </p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Selected Symptoms -->
-            <div class="md-card sidebar-card">
-                <div class="sidebar-header">
-                    <div class="sidebar-icon">
-                        <span class="material-icons" style="font-size: 16px;">checklist</span>
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary-50 to-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Cara Kerja Sistem</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Proses sederhana dalam 3 langkah untuk mendapatkan diagnosis akurat
+                </p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-12">
+                <div class="text-center group">
+                    <div class="relative mx-auto w-32 h-32 mb-8">
+                        <div class="w-32 h-32 bg-primary-100 rounded-full flex items-center justify-center group-hover:bg-primary-200 transition-all duration-300 hover-scale">
+                            <span class="text-5xl">❓</span>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary-500 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
                     </div>
-                    <h3 class="md-headline-6">Gejala Dipilih</h3>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Observasi Gejala</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Amati gejala-gejala yang muncul pada daun cabai Anda, seperti bercak, perubahan warna, atau kerusakan fisik lainnya.
+                    </p>
                 </div>
-                <div id="selected-symptoms">
-                    <p class="md-body-2" style="color: #757575; font-style: italic;">Belum ada gejala yang dipilih</p>
+                <div class="text-center group">
+                    <div class="relative mx-auto w-32 h-32 mb-8">
+                        <div class="w-32 h-32 bg-primary-100 rounded-full flex items-center justify-center group-hover:bg-primary-200 transition-all duration-300 hover-scale">
+                            <span class="text-5xl">💬</span>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary-500 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Konsultasi Sistem</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Jawab serangkaian pertanyaan yang diajukan sistem pakar tentang gejala yang Anda amati pada tanaman cabai.
+                    </p>
+                </div>
+                <div class="text-center group">
+                    <div class="relative mx-auto w-32 h-32 mb-8">
+                        <div class="w-32 h-32 bg-primary-100 rounded-full flex items-center justify-center group-hover:bg-primary-200 transition-all duration-300 hover-scale">
+                            <span class="text-5xl">📋</span>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary-500 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Diagnosis & Solusi</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Terima hasil diagnosis dengan confidence level, beserta rekomendasi pengobatan dan pencegahan yang tepat.
+                    </p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Knowledge Base Info -->
-            <div class="md-card sidebar-card">
-                <div class="sidebar-header">
-                    <div class="sidebar-icon" style="background: #3F51B5;">
-                        <span class="material-icons" style="font-size: 16px;">school</span>
-                    </div>
-                    <h3 class="md-headline-6">Knowledge Base</h3>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-number" id="total-rules">0</span>
-                        <div class="stat-label">Rules</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" style="color: #9C27B0;">4</span>
-                        <div class="stat-label">Diseases</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" style="color: #F44336;">15</span>
-                        <div class="stat-label">Symptoms</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" style="color: #FF9800;">FC</span>
-                        <div class="stat-label">Method</div>
-                    </div>
-                </div>
+    <!-- Disease Types Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Jenis Penyakit yang Dapat Dideteksi</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Sistem kami dapat mengidentifikasi berbagai penyakit umum pada daun cabai
+                </p>
             </div>
-
-            <!-- Disease Database -->
-            <div class="md-card sidebar-card">
-                <div class="sidebar-header">
-                    <div class="sidebar-icon" style="background: var(--md-secondary);">
-                        <span class="material-icons" style="font-size: 16px;">bug_report</span>
-                    </div>
-                    <h3 class="md-headline-6">Disease Database</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="hover-scale bg-gradient-to-br from-red-50 to-white p-6 rounded-2xl border border-red-100">
+                    <div class="text-4xl text-center mb-4">🔴</div>
+                    <h3 class="text-lg font-semibold text-center text-gray-800 mb-2">Leaf Spot</h3>
+                    <p class="text-sm text-gray-600 text-center">Fungal leaf disease - Penyakit jamur yang menyebabkan bercak pada daun</p>
                 </div>
+                <div class="hover-scale bg-gradient-to-br from-blue-50 to-white p-6 rounded-2xl border border-blue-100">
+                    <div class="text-4xl text-center mb-4">🌀</div>
+                    <h3 class="text-lg font-semibold text-center text-gray-800 mb-2">Leaf Curl</h3>
+                    <p class="text-sm text-gray-600 text-center">Viral leaf curl - Penyakit virus yang menyebabkan daun mengkerut</p>
+                </div>
+                <div class="hover-scale bg-gradient-to-br from-amber-50 to-white p-6 rounded-2xl border border-amber-100">
+                    <div class="text-4xl text-center mb-4">🪰</div>
+                    <h3 class="text-lg font-semibold text-center text-gray-800 mb-2">Whitefly</h3>
+                    <p class="text-sm text-gray-600 text-center">Pest infestation - Serangan hama kutu kebul putih</p>
+                </div>
+          
+                </div>
+            
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <div class="disease-item">
-                        <div class="disease-icon">🔴</div>
-                        <div class="disease-info">
-                            <h4>Leaf Spot</h4>
-                            <p>Fungal leaf disease</p>
+                    <h2 class="text-4xl font-bold mb-6">Tentang ChiliDoc</h2>
+                    <p class="text-xl mb-6 text-primary-100">
+                        ChiliDoc adalah sistem pakar berbasis kecerdasan buatan yang dikembangkan khusus untuk membantu petani cabai dalam mengidentifikasi dan mengatasi penyakit pada tanaman mereka.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-2 h-2 bg-primary-300 rounded-full"></div>
+                            <span class="text-primary-100">Dikembangkan oleh tim ahli pertanian dan AI</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-2 h-2 bg-primary-300 rounded-full"></div>
+                            <span class="text-primary-100">Database lebih dari 10,000 gambar penyakit cabai</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-2 h-2 bg-primary-300 rounded-full"></div>
+                            <span class="text-primary-100">Terintegrasi dengan penelitian terbaru</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-2 h-2 bg-primary-300 rounded-full"></div>
+                            <span class="text-primary-100">Akurasi diagnosis mencapai 95%</span>
                         </div>
                     </div>
-                    <div class="disease-item">
-                        <div class="disease-icon">🌀</div>
-                        <div class="disease-info">
-                            <h4>Leaf Curl</h4>
-                            <p>Viral leaf curl</p>
-                        </div>
-                    </div>
-                    <div class="disease-item">
-                        <div class="disease-icon">🪰</div>
-                        <div class="disease-info">
-                            <h4>Whitefly</h4>
-                            <p>Pest infestation</p>
-                        </div>
-                    </div>
-                    <div class="disease-item">
-                        <div class="disease-icon">💚</div>
-                        <div class="disease-info">
-                            <h4>Healthy</h4>
-                            <p>Plant is healthy</p>
+                </div>
+                <div class="relative">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-8">
+                        <div class="text-center space-y-6 flex flex-col items-center">
+                            <img src="/sipedaci.png" alt="logo sipedaci" class="w-32 h-32 flex ">
+                            <h3 class="text-2xl font-semibold">Misi Kami</h3>
+                            <p class="text-primary-100">
+                                Meningkatkan produktivitas petani cabai Indonesia melalui teknologi AI yang mudah diakses dan akurat dalam mendeteksi penyakit tanaman.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold gradient-text mb-6">Siap Melindungi Tanaman Cabai Anda?</h2>
+            <p class="text-xl text-gray-600 mb-8">
+                Bergabunglah dengan ribuan petani yang telah merasakan manfaat ChiliDoc untuk meningkatkan hasil panen mereka.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="deteksi.html" class="bg-primary-600 hover:bg-primary-700 text-white px-10 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                    🚀 Mulai Sekarang - Gratis
+                </a>
+                <a href="http://wa.me/628225840148" class="border-2 border-primary-600 text-primary-600 hover:bg-primary-50 px-10 py-4 rounded-xl text-lg font-semibold transition-all duration-300 hover:scale-105">
+                    📞 Hubungi Tim Kami
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4 class="md-headline-6">About System</h4>
-                <p class="md-body-2">
-                    Modern expert system using Forward Chaining inference for chili plant disease diagnosis with 15 symptoms and 13 intelligent rules.
-                </p>
+    <footer class="bg-primary-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="/sipedaci.png" alt="logo sipedaci" class="w-10 h-10">
+                        <span class="text-2xl font-bold">ChiliDoc</span>
+                    </div>
+                    <p class="text-primary-200 mb-4">
+                        Sistem pakar deteksi penyakit daun cabai menggunakan kecerdasan buatan untuk membantu petani Indonesia.
+                    </p>
+                    <div class="flex space-x-4">
+                        <div class="w-10 h-10 bg-primary-700 hover:bg-primary-600 rounded-lg flex items-center justify-center cursor-pointer transition-colors">
+                            <span>📧</span>
+                        </div>
+                        <div class="w-10 h-10 bg-primary-700 hover:bg-primary-600 rounded-lg flex items-center justify-center cursor-pointer transition-colors">
+                            <span>📱</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Fitur</h3>
+                    <ul class="space-y-2 text-primary-200">
+                        <li><a href="deteksi.html" class="hover:text-white transition-colors">Deteksi Penyakit</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Analisis AI</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Solusi Pengobatan</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Panduan Lengkap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Dukungan</h3>
+                    <ul class="space-y-2 text-primary-200">
+                        <li><a href="#" class="hover:text-white transition-colors">Bantuan</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Tutorial</a></li>
+                        <li><a href="http://wa.me/628225840148" class="hover:text-white transition-colors">Kontak</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4 class="md-headline-6">Technology Stack</h4>
-                <ul class="tech-list">
-                    <li>
-                        <div class="tech-dot" style="background: #2196F3;"></div>
-                        <span>Rule-Based Expert System</span>
-                    </li>
-                    <li>
-                        <div class="tech-dot" style="background: #9C27B0;"></div>
-                        <span>Forward Chaining AI</span>
-                    </li>
-                    <li>
-                        <div class="tech-dot" style="background: var(--md-primary);"></div>
-                        <span>Confidence-based Diagnosis</span>
-                    </li>
-                    <li>
-                        <div class="tech-dot" style="background: #FF9800;"></div>
-                        <span>Material Design UI</span>
-                    </li>
-                </ul>
+            <div class="border-t border-primary-700 mt-8 pt-8 text-center text-primary-300">
+                <p>&copy; 2025 ChiliDoc. Semua hak dilindungi. Dibuat dengan ❤️ untuk petani Indonesia.</p>
             </div>
-            <div class="footer-section">
-                <h4 class="md-headline-6">Quick Actions</h4>
-                <button onclick="runDemo()" class="md-button md-button-primary" style="width: 100%; margin-bottom: 16px;">
-                    <span class="material-icons" style="margin-right: 8px;">science</span>
-                    Run Demo
-                </button>
-                <p class="md-caption">
-                    Diagnostic results are for reference only. Consult agricultural experts for serious issues.
-                </p>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <p>&copy; 2025 ChiliDoctor AI Expert System • Built with Material Design</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.backdropFilter = 'blur(20px)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.1)';
+                nav.style.backdropFilter = 'blur(16px)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.hover-scale, section > div > div').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Counter animation
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + (element.textContent.includes('%') ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (element.textContent.includes('%') ? '%' : '+');
+                }
+            }, 20);
+        }
+
+        // Animate counters when they come into view
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const text = entry.target.textContent;
+                    const number = parseInt(text.replace(/\D/g, ''));
+                    animateCounter(entry.target, number);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.querySelectorAll('.text-2xl.font-bold.text-primary-600').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // Mobile menu toggle (if needed)
+        const mobileMenuBtn = document.createElement('button');
+        mobileMenuBtn.innerHTML = '☰';
+        mobileMenuBtn.className = 'md:hidden text-primary-700 text-2xl';
+        
+        // Add click handlers for CTA buttons
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Mulai Deteksi') || button.textContent.includes('Mulai Sekarang')) {
+                button.addEventListener('click', function() {
+                    // Simulate starting the detection process
+                    this.innerHTML = '⏳ Memuat...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        alert('Fitur deteksi akan segera tersedia! 🌶️');
+                        this.innerHTML = this.textContent.includes('Sekarang') ? '🚀 Mulai Sekarang - Gratis' : '🔍 Mulai Deteksi Sekarang';
+                        this.disabled = false;
+                    }, 2000);
+                });
+            }
+        });
+
+        // Add hover effects for feature cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('#home');
+            const speed = scrolled * 0.5;
+            
+            if (parallax) {
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Loading animation for demo
+        function simulateDetection() {
+            const demoCard = document.querySelector('.animate-float .relative');
+            const progressBar = demoCard.querySelector('.bg-green-500');
+            const result = demoCard.querySelector('.bg-primary-50:last-child');
+            
+            let width = 0;
+            const interval = setInterval(() => {
+                width += Math.random() * 15;
+                if (width >= 100) {
+                    width = 100;
+                    clearInterval(interval);
+                    result.style.display = 'block';
+                    result.style.animation = 'fadeIn 0.5s ease-in';
+                }
+                progressBar.style.width = width + '%';
+            }, 200);
+        }
+
+        // Auto-start demo every 10 seconds
+        setInterval(simulateDetection, 10000);
+
+        // Add CSS for fadeIn animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .animate-fadeIn {
+                animation: fadeIn 0.5s ease-in-out;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
