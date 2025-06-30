@@ -1,4 +1,3 @@
-
 const symptoms = [
     { id: 'S01', name: 'Daun memiliki bercak coklat atau hitam' },
     { id: 'S02', name: 'Bercak pada daun membesar dan menyatu' },
@@ -14,7 +13,13 @@ const symptoms = [
     { id: 'S12', name: 'Tanaman tampak sehat secara keseluruhan' },
     { id: 'S13', name: 'Tidak ada gejala penyakit yang terlihat' },
     { id: 'S14', name: 'Daun hijau dan segar' },
-    { id: 'S15', name: 'Pertumbuhan normal dan produktif' }
+    { id: 'S15', name: 'Pertumbuhan normal dan produktif' },
+    // Gejala tambahan untuk Yellowish
+    { id: 'S16', name: 'Daun menguning secara merata dari ujung' },
+    { id: 'S17', name: 'Tulang daun masih berwarna hijau' },
+    { id: 'S18', name: 'Daun tua menguning lebih dulu' },
+    { id: 'S19', name: 'Pertumbuhan tanaman melambat' },
+    { id: 'S20', name: 'Daun mudah rontok saat disentuh' }
 ];
 
 const diseases = {
@@ -96,6 +101,26 @@ const diseases = {
             'Lakukan pemeriksaan rutin setiap 2-3 hari',
             'Jaga kebersihan area sekitar tanaman dari gulma',
             'Monitor cuaca dan sesuaikan perawatan dengan kondisi iklim'
+        ]
+    },
+    'D05': {
+        name: 'Yellowish (Klorosis)',
+        icon: '🟡',
+        description: 'Penyakit defisiensi nutrisi yang menyebabkan daun menguning karena kekurangan klorofil, biasanya akibat defisiensi nitrogen, besi, atau magnesium.',
+        confidence: 0,
+        treatments: [
+            'Berikan pupuk nitrogen tinggi (NPK 20-10-10) sesuai dosis anjuran',
+            'Aplikasi pupuk daun yang mengandung besi (Fe) dan magnesium (Mg)',
+            'Tambahkan pupuk kompos atau pupuk kandang untuk memperbaiki struktur tanah',
+            'Semprot dengan larutan besi sulfat (1-2 gram per liter air)',
+            'Berikan pupuk NPK lengkap dengan mikronutrient secara berkala'
+        ],
+        prevention: [
+            'Lakukan analisis pH tanah dan sesuaikan ke rentang 6.0-6.8',
+            'Berikan pupuk dasar yang cukup sebelum tanam',
+            'Jaga kelembaban tanah yang optimal dengan mulsa organik',
+            'Lakukan pemupukan rutin setiap 2-3 minggu sekali',
+            'Monitor kondisi drainase untuk mencegah genangan air'
         ]
     }
 };
@@ -199,8 +224,46 @@ const rules = [
         conclusion: 'D04',
         confidence: 0.8,
         description: 'JIKA tanaman sehat DAN pertumbuhan normal → Sehat (80%)'
+    },
+
+    // Rules untuk Yellowish (Klorosis) - BARU
+    {
+        id: 'R14',
+        conditions: ['S16', 'S17'],
+        conclusion: 'D05',
+        confidence: 0.8,
+        description: 'JIKA daun menguning merata DAN tulang daun masih hijau → Yellowish (80%)'
+    },
+    {
+        id: 'R15',
+        conditions: ['S16', 'S18', 'S19'],
+        conclusion: 'D05',
+        confidence: 0.9,
+        description: 'JIKA daun menguning merata DAN daun tua kuning dulu DAN pertumbuhan lambat → Yellowish (90%)'
+    },
+    {
+        id: 'R16',
+        conditions: ['S18', 'S20'],
+        conclusion: 'D05',
+        confidence: 0.7,
+        description: 'JIKA daun tua kuning dulu DAN daun mudah rontok → Yellowish (70%)'
+    },
+    {
+        id: 'R17',
+        conditions: ['S06', 'S16', 'S19'],
+        conclusion: 'D05',
+        confidence: 0.85,
+        description: 'JIKA daun muda kuning DAN menguning merata DAN pertumbuhan lambat → Yellowish (85%)'
+    },
+    {
+        id: 'R18',
+        conditions: ['S08', 'S17', 'S19'],
+        conclusion: 'D05',
+        confidence: 0.75,
+        description: 'JIKA daun kuning+layu DAN tulang daun hijau DAN pertumbuhan lambat → Yellowish (75%)'
     }
 ];
+
 
 // State Management Variables
 let currentQuestionIndex = 0;
